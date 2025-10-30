@@ -1,0 +1,44 @@
+[
+  {
+    "id":1,
+    "name": "Canon EOS C70 Cinema ",
+    "type": "Camera",
+    "status": "NEW IN STOCK",
+    "description": "Exceptional cinema capabilities in a compact package, along with a 4KSuper 35mm DGO Sensor and built-in features, including ND Filters,mini XLRs, direct touch rotatable LCD screen, and Dual Pixel CMOSAutofocus.",
+    "img": "/slides/canon eos.webp",
+    "theme": {
+      "badge": "bg-blue-500",
+      "highlight": "text-blue-400",
+      "button": "bg-blue-500 hover:bg-blue-600",
+      "glow": "bg-blue-500/30"
+    }
+  },
+  {
+    "id":2,
+    "name": "ROG Delta S Wireless Gaming",
+    "type": "Headset",
+    "status": "BESET SELLER",
+    "description": "Lightweight wireless gaming headset with 2.4 GHz and Bluetooth connectivity, 50 mm ASUS Essence drivers, AI Beamforming Microphones with AI Noise Cancelation, compatible with PCs, Macs, PlayStation® 5.",
+    "img": "/slides/rog delta s.png",
+    "theme": {
+      "badge": "bg-purple-500",
+      "highlight": "text-purple-400",
+      "button": "bg-purple-500 hover:bg-purple-600",
+      "glow": "bg-purple-500/30"
+    }
+  },
+  {
+    "id":3,
+    "name": "ASUS Vivobook S16",
+    "type": "Laptop",
+    "status": "LIMITED EDITION",
+    "description": "Experience effortless AI with the ASUS Vivobook S16, your ideal companion for everyday life. Whether for work, study, or play, this ASUS Copilot+ PC helps you power through any task, designed to be more productive, intelligent, and secure.",
+    "img": "/slides/asus vivobook.png",
+    "theme": {
+      "badge": "bg-emerald-500",
+      "highlight": "text-emerald-400",
+      "button": "bg-emerald-500 hover:bg-emerald-600",
+      "glow": "bg-emerald-500/30"
+    }
+  }
+]
