@@ -32,11 +32,14 @@ export default function SignUpDialog({
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
       } else {
-        console.log(result);
+        console.log("Sign up incomplete:", result);
       }
-    } catch (error) {
-      setError("Error occurred");
-      console.log(error);
+    } catch (error: any) {
+      const errorMessage = error.errors?.[0]?.longMessage || 
+                          error.errors?.[0]?.message || 
+                          "Failed to create account";
+      setError(errorMessage);
+      console.error("Clerk error:", JSON.stringify(error, null, 2));
     }
   }
 
@@ -57,7 +60,6 @@ export default function SignUpDialog({
             <p className="text-sm">Welcome! Create an account to get started</p>
           </div>
 
-          {/* Email + password signup */}
           <div className="mt-6 space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="block text-sm">
@@ -77,7 +79,6 @@ export default function SignUpDialog({
                 <Label htmlFor="pwd" className="text-sm">
                   Password
                 </Label>
-                
               </div>
               <Input
                 type="password"
@@ -95,7 +96,6 @@ export default function SignUpDialog({
             </Button>
           </div>
 
-          {/* Divider */}
           <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
             <hr className="border-dashed" />
             <span className="text-muted-foreground text-xs">
@@ -104,17 +104,16 @@ export default function SignUpDialog({
             <hr className="border-dashed" />
           </div>
 
-          {/* OAuth (Google) */}
           <div className="grid grid-cols-1">
             <Button
               className="cursor-pointer"
               type="button"
               variant="outline"
               onClick={() => {
-                if (!isSignInLoaded) return;
-                signIn.authenticateWithRedirect({
+                if (!isSignUpLoaded) return;
+                signUp.authenticateWithRedirect({
                   strategy: "oauth_google",
-                  redirectUrl: window.location.pathname,
+                  redirectUrl: "/sso-callback",
                   redirectUrlComplete: "/",
                 });
               }}

@@ -31,10 +31,13 @@ export default function SignInDialog({
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
       } else {
-        console.log(result);
+        console.log("Sign in incomplete:", result);
       }
-    } catch (error) {
-      setError("Invalid email or password");
+    } catch (error: any) {
+      const errorMessage = error.errors?.[0]?.longMessage || 
+                          error.errors?.[0]?.message || 
+                          "Invalid email or password";
+      setError(errorMessage);
       console.error("Clerk error:", JSON.stringify(error, null, 2));
     }
   }
@@ -149,7 +152,6 @@ export default function SignInDialog({
           </div>
         </div>
 
-        {/* Footer - Switch to Sign Up */}
         <div className="p-3">
           <p className="text-accent-foreground text-center text-sm">
             Don&apos;t have an account?

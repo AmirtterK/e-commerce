@@ -183,11 +183,10 @@ export default function Home() {
     );
   }
 
-  // 🧱 Error or empty cart
-  if (error || !cart) {
+  if (error) {
     return (
       <div className="mx-auto py-50 flex flex-col justify-center items-center gap-8">
-        <p>{error || "Your cart is empty."}</p>
+        <p>{error}</p>
         <Button variant={"outline"}>
           <Link href="/">Home</Link>
         </Button>
@@ -206,25 +205,31 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-x-6">
         <OrderCard total={totalPrice} />
         <div className="col-span-2 order-2 md:order-1">
-          {cart.map((item, id) => (
-            <CartCard
-              key={id}
-              item={item}
-              product={item.product}
-              onSelectionChange={handleSelectionChange}
-              onDelete={() => handleDelete(item.id)}
-              quantityControl={
-                <QuantityButton
-                  initialQuantity={item.quantity}
-                  max={item.product.stock}
-                  min={1}
-                  onQuantityChange={(quantity) =>
-                    handleQuantityChange(item.id, quantity)
-                  }
-                />
-              }
-            />
-          ))}
+          {!cart || cart.length === 0 ? (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <p className="text-gray-400 text-lg">Empty</p>
+            </div>
+          ) : (
+            cart.map((item, id) => (
+              <CartCard
+                key={id}
+                item={item}
+                product={item.product}
+                onSelectionChange={handleSelectionChange}
+                onDelete={() => handleDelete(item.id)}
+                quantityControl={
+                  <QuantityButton
+                    initialQuantity={item.quantity}
+                    max={item.product.stock}
+                    min={1}
+                    onQuantityChange={(quantity) =>
+                      handleQuantityChange(item.id, quantity)
+                    }
+                  />
+                }
+              />
+            ))
+          )}
         </div>
       </div>
     </section>

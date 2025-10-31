@@ -13,7 +13,6 @@ export default function AddToCartButton({ product }: { product: CartItem }) {
   const { openSignIn } = useAuthDialog();
 
   async function AddToCart() {
-    // Check if user is signed in
     if (!isLoaded) return;
     
     if (!isSignedIn) {
