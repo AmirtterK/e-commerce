@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import SignUpDialog from "./SignUpDialog";
 
-export default function LoginButton({
+export default function SignInButton({
   isCompact = true,
 }: {
   isCompact?: boolean;

@@ -4,20 +4,21 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthDialog } from "./AuthDialogProvider";
 
-export default function SignupButton({
+export default function SignInButton({
   isCompact = true,
 }: {
   isCompact?: boolean;
 }) {
-  const { openSignup } = useAuthDialog();
+  const { openSignIn } = useAuthDialog();
 
   return (
     <Button
+      variant="outline"
       size="sm"
       className={cn(isCompact && "lg:hidden", "cursor-pointer")}
-      onClick={openSignup}
+      onClick={openSignIn}
     >
-      <span>Sign Up</span>
+      Sign In
     </Button>
   );
 }

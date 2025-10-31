@@ -7,7 +7,11 @@ import Link from "next/link";
 import { useSignUp, useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 
-export default function SignUpDialog() {
+export default function SignUpDialog({ 
+  onSwitchToSignIn 
+}: { 
+  onSwitchToSignIn?: () => void 
+}) {
   const { isLoaded: isSignUpLoaded, signUp, setActive } = useSignUp();
   const { isLoaded: isSignInLoaded, signIn } = useSignIn();
 
@@ -30,8 +34,8 @@ export default function SignUpDialog() {
       } else {
         console.log(result);
       }
-    } catch (error ){
-      setError("Error occured");
+    } catch (error) {
+      setError("Error occurred");
       console.log(error);
     }
   }
@@ -104,7 +108,7 @@ export default function SignUpDialog() {
             <hr className="border-dashed" />
           </div>
 
-          {/* OAuth (Google) → use signIn.authenticateWithRedirect */}
+          {/* OAuth (Google) */}
           <div className="grid grid-cols-1">
             <Button
               className="cursor-pointer"
@@ -147,7 +151,19 @@ export default function SignUpDialog() {
           </div>
         </div>
 
-      
+        <div className="p-3">
+          <p className="text-accent-foreground text-center text-sm">
+            Already have an account?
+            <Button 
+              variant="link" 
+              className="px-2 cursor-pointer"
+              type="button"
+              onClick={onSwitchToSignIn}
+            >
+              Sign in
+            </Button>
+          </p>
+        </div>
       </form>
     </section>
   );
