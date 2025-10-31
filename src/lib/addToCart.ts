@@ -2,6 +2,7 @@ import { CartItem } from "@/types/CartItem";
 import { User } from "@/types/User";
 import { auth } from "@clerk/nextjs/server";
 import { MongoClient, ObjectId } from "mongodb";
+import { revalidatePath } from "next/cache";
 
 const uri = process.env.MONGODB_URI as string;
 

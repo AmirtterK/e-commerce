@@ -4,18 +4,19 @@ import CartCard from "@/components/CartCard";
 import OrderCard from "@/components/OrderCard";
 import { QuantityButton } from "@/components/QuantityButton";
 import { Button } from "@/components/ui/button";
+import { deleteFromCart } from "@/lib/deleteFromCart";
 import { ember } from "@/lib/fonts";
 import { getProductById } from "@/lib/getProductById";
 import { CartItem } from "@/types/CartItem";
 import { ExtendedCart } from "@/types/Extendedcart";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [cart, setCart] = useState<ExtendedCart[] | null>(null);
-  const [cartQuantity, setCartQuantity] = useState(1);
 
   const [selecetdItems, setSelectedItems] = useState<{
     [key: string]: {
@@ -31,7 +32,7 @@ export default function Home() {
     isSelected: boolean,
     price: number,
     quantity: number,
-    discountPrice?: number,
+    discountPrice?: number
   ) => {
     setSelectedItems((prev) => ({
       ...prev,
@@ -59,17 +60,18 @@ export default function Home() {
       return null;
     }
   };
+
   async function handleQuantityChange(id: string, quantity: number) {
     setCart(
       (prev) =>
         prev?.map((item) => (item.id === id ? { ...item, quantity } : item)) ||
         null
     );
-     setSelectedItems((prev) => {
+    setSelectedItems((prev) => {
       if (prev[id]) {
         return {
           ...prev,
-          [id]: { ...prev[id], quantity }
+          [id]: { ...prev[id], quantity },
         };
       }
       return prev;
@@ -84,6 +86,49 @@ export default function Home() {
       console.error("Failed to update:", error);
     }
   }
+
+  async function handleDelete(id: string) {
+    try {
+      setCart((prev) => prev?.filter((item) => item.id !== id) || null);
+      setSelectedItems((prev) => {
+        const newSelected = { ...prev };
+        delete newSelected[id];
+        return newSelected;
+      });
+      await deleteFromCart(id);
+    } catch (error) {
+      console.error("Failed to delete item:", error);
+      const cartList = await getCart();
+      if (cartList) {
+        const extendedCart: ExtendedCart[] = await Promise.all(
+          cartList.map(async (item) => {
+            const product = await getProductById(item.id);
+            return {
+              id: item.id,
+              product: product || {
+                id: item.id,
+                name: "Unknown",
+                brand: "",
+                description: "",
+                color: "",
+                price: 0,
+                discountPrice: 0,
+                image: "",
+                category: "",
+                stock: 0,
+                inStock: false,
+                rating: 0,
+                reviewsCount: 0,
+              },
+              quantity: item.quantity,
+            };
+          })
+        );
+        setCart(extendedCart);
+      }
+    }
+  }
+
   useEffect(() => {
     const fetchCartWithProducts = async () => {
       setLoading(true);
@@ -132,11 +177,17 @@ export default function Home() {
     fetchCartWithProducts();
   }, []);
 
-  if (loading) return <div></div>;
+  if (loading) {
+    return (
+      <ProductCardSkeleton/>
+    );
+  }
+
+  // 🧱 Error or empty cart
   if (error || !cart) {
     return (
-      <div className="mx-auto py-50  flex flex-col justify-center items-center gap-8">
-        <p className="">{error || "your cart not found."}</p>
+      <div className="mx-auto py-50 flex flex-col justify-center items-center gap-8">
+        <p>{error || "Your cart is empty."}</p>
         <Button variant={"outline"}>
           <Link href="/">Home</Link>
         </Button>
@@ -147,15 +198,21 @@ export default function Home() {
   return (
     <section className="py-32 px-5 max-w-6xl mx-auto">
       <h1
-        className={` ${ember.className} col-span-1 md:col-span-3 font-medium text-4xl pb-8`}
+        className={`${ember.className} col-span-1 md:col-span-3 font-medium text-4xl pb-8`}
       >
-        Cart {cart.length === 0 && <span>Empty</span>}
+        Cart
       </h1>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-x-6">
         <OrderCard total={totalPrice} />
         <div className="col-span-2 order-2 md:order-1">
           {cart.map((item, id) => (
             <CartCard
+              key={id}
+              item={item}
+              product={item.product}
+              onSelectionChange={handleSelectionChange}
+              onDelete={() => handleDelete(item.id)}
               quantityControl={
                 <QuantityButton
                   initialQuantity={item.quantity}
@@ -166,10 +223,6 @@ export default function Home() {
                   }
                 />
               }
-              item={item}
-              key={id}
-              onSelectionChange={handleSelectionChange}
-              product={item.product}
             />
           ))}
         </div>

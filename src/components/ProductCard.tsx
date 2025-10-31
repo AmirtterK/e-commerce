@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Product } from "@/types/product";
 import Image from "next/image";
-import { ember, emberLight, emberWmd } from "../lib/fonts";
+import { ember, emberWmd } from "../lib/fonts";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { IoStar, IoStarOutline } from "react-icons/io5";
@@ -20,17 +20,11 @@ export function ProductCard({ product }: { product: Product }) {
     id,
     brand,
     name,
-    description,
-    color,
     price,
     discountPrice,
     image,
-    category,
-    tags,
-    stock,
-    inStock,
+
     rating,
-    reviewsCount,
   } = product;
 
   return (

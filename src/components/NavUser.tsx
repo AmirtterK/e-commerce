@@ -32,10 +32,10 @@ export function NavUser({ isScrolled = false }: { isScrolled?: boolean }) {
           <div
             className={cn(
               "text-accent-foreground block duration-150 transition-all duration-300",
-              isScrolled && "hidden"
+              isScrolled && "md:hidden"
+
             )}
           >
-            {/* <div className="text-accent-foreground block duration-150"> */}
             {user.firstName || user.username}
           </div>
           <Avatar className="h-8 w-8 rounded-lg ">

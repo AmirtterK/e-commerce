@@ -60,7 +60,7 @@ function Banner({ slide }: { slide: Slide }) {
         <div className="relative  h-full w-full">
           <img
             src={img}
-            alt="SoundWave Pro X7 Headphones"
+            alt="product name"
             className="drop-shadow-2xl h-full w-full object-contain drop-shadow-2xl rounded-lg"
           />
         </div>

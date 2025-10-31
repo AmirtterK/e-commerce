@@ -9,8 +9,8 @@ function SlideShowSkeleton() {
       <section className="relative px-5">
         <div className="max-w-6xl mx-auto overflow-hidden rounded-lg">
           <div className="relative">
-            <div className="w-full h-64 md:h-96 bg-gradient-to-r from-gray-800 to-gray-900 animate-pulse rounded-lg relative">
-              <div className="absolute inset-0 flex items-center">
+            <div className="w-full h-80 md:h-96 bg-gradient-to-r from-gray-800 to-gray-900 animate-pulse rounded-lg relative">
+              <div className="absolute inset-0 flex items-center flex-col md:flex-row">
                 <div className="w-5/6 p-8 space-y-6">
                   <div className="w-4/6 h-8 bg-gray-600 rounded animate-pulse"></div>
 
@@ -22,7 +22,7 @@ function SlideShowSkeleton() {
                 </div>
 
                 <div className="w-1/2 h-full flex items-center justify-center">
-                  <div className="w-80 h-60 bg-gray-700 rounded-lg animate-pulse"></div>
+                  <div className=" md:w-80 md:h-60 w-40 h-20 bg-gray-700 rounded-lg animate-pulse"></div>
                 </div>
               </div>
             </div>
