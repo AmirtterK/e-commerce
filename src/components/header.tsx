@@ -11,7 +11,6 @@ import SignupButton from "./SignupButton";
 import GetStartedButton from "./GetStartedButton";
 import { ember, emberLight } from "../lib/fonts";
 import { Product } from "@/types/product";
-import { AuthDialogProvider } from "./AuthDialogProvider";
 const menuItems = [
   { name: "Home", href: "/" },
   { name: "Shop", href: "/shop" },
@@ -262,7 +261,6 @@ export const Header = () => {
                   </button>
                 )}
                 <NavUser isScrolled={isCompact} />
-                <AuthDialogProvider>
                   <SignedOut>
                     <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                       <SignInButton isCompact={isCompact} />
@@ -270,7 +268,6 @@ export const Header = () => {
                       <GetStartedButton isCompact={isCompact} />
                     </div>
                   </SignedOut>
-                </AuthDialogProvider>
               </div>
             </div>
           )}

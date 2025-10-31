@@ -46,7 +46,7 @@ export default function SignUpDialog({
         onSubmit={handleSubmit}
         className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-[calc(var(--radius)+.125rem)] border shadow-md shadow-zinc-950/5 dark:[--color-muted:var(--color-zinc-900)]"
       >
-        <div className="bg-card -m-px rounded-[calc(var(--radius)+.125rem)] border p-8 pb-6">
+        <div className="bg-background -m-px rounded-[calc(var(--radius)+.125rem)] border p-8 pb-6">
           <div className="text-center">
             <Link href="/" aria-label="go home" className="mx-auto block w-fit">
               <img src="/logo.png" alt="" className="size-10" />
@@ -77,11 +77,7 @@ export default function SignUpDialog({
                 <Label htmlFor="pwd" className="text-sm">
                   Password
                 </Label>
-                <Button asChild variant="link" size="sm">
-                  <Link href="#" className="text-sm">
-                    Forgot your Password?
-                  </Link>
-                </Button>
+                
               </div>
               <Input
                 type="password"

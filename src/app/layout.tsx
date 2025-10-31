@@ -8,6 +8,7 @@ import { Header } from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import SyncUser from "@/components/SyncUser";
 import { Toaster } from "sonner";
+import { AuthDialogProvider } from "@/components/AuthDialogProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,20 +33,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider attribute="class" defaultTheme="dark">
-            <Header />
+            <AuthDialogProvider>
+              <Header />
 
-            <main className="">
-              <SyncUser />
-              {children}
-            </main>
-            <Toaster/>
+              <main className="">
+                <SyncUser />
+                {children}
+              </main>
+              <Toaster />
+            </AuthDialogProvider>
           </ThemeProvider>
           <Footer />
         </body>
