@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Divide, Menu, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { SignedOut } from "@clerk/nextjs";
@@ -9,7 +9,7 @@ import { NavUser } from "./NavUser";
 import SignInButton from "./SignInButton";
 import SignupButton from "./SignupButton";
 import GetStartedButton from "./GetStartedButton";
-import { ember, emberLight } from "../lib/fonts";
+import { ember } from "../lib/fonts";
 import { Product } from "@/types/product";
 const menuItems = [
   { name: "Home", href: "/" },

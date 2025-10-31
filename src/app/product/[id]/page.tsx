@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { IoStar, IoStarOutline } from "react-icons/io5";
 import Link from "next/link";
 import { Product } from "@/types/product";
-import { ember, emberLight, emberWmd } from "@/lib/fonts";
+import { ember } from "@/lib/fonts";
 import { formatNumber } from "@/lib/utils";
 import { QuantityButton } from "@/components/QuantityButton";
 import AddToCartButton from "@/components/AddToCartButton";

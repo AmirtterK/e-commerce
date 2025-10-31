@@ -7,10 +7,10 @@ import Link from "next/link";
 import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 
-export default function SignInDialog({ 
-  onSwitchToSignUp 
-}: { 
-  onSwitchToSignUp?: () => void 
+export default function SignInDialog({
+  onSwitchToSignUp,
+}: {
+  onSwitchToSignUp?: () => void;
 }) {
   const { isLoaded, signIn, setActive } = useSignIn();
 
@@ -21,7 +21,7 @@ export default function SignInDialog({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!isLoaded) return;
-    
+
     try {
       const result = await signIn.create({
         identifier: email,
@@ -33,10 +33,19 @@ export default function SignInDialog({
       } else {
         console.log("Sign in incomplete:", result);
       }
-    } catch (error: any) {
-      const errorMessage = error.errors?.[0]?.longMessage || 
-                          error.errors?.[0]?.message || 
-                          "Invalid email or password";
+    } catch (error: unknown) {
+      let errorMessage = "Invalid email or password";
+
+      if (typeof error === "object" && error !== null && "errors" in error) {
+        const err = error as {
+          errors?: { longMessage?: string; message?: string }[];
+        };
+        errorMessage =
+          err.errors?.[0]?.longMessage ||
+          err.errors?.[0]?.message ||
+          errorMessage;
+      }
+
       setError(errorMessage);
       console.error("Clerk error:", JSON.stringify(error, null, 2));
     }
@@ -155,8 +164,8 @@ export default function SignInDialog({
         <div className="p-3">
           <p className="text-accent-foreground text-center text-sm">
             Don&apos;t have an account?
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               className="px-2 cursor-pointer"
               type="button"
               onClick={onSwitchToSignUp}

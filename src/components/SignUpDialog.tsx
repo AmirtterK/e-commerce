@@ -7,10 +7,10 @@ import Link from "next/link";
 import { useSignUp, useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 
-export default function SignUpDialog({ 
-  onSwitchToSignIn 
-}: { 
-  onSwitchToSignIn?: () => void 
+export default function SignUpDialog({
+  onSwitchToSignIn,
+}: {
+  onSwitchToSignIn?: () => void;
 }) {
   const { isLoaded: isSignUpLoaded, signUp, setActive } = useSignUp();
   const { isLoaded: isSignInLoaded, signIn } = useSignIn();
@@ -34,10 +34,19 @@ export default function SignUpDialog({
       } else {
         console.log("Sign up incomplete:", result);
       }
-    } catch (error: any) {
-      const errorMessage = error.errors?.[0]?.longMessage || 
-                          error.errors?.[0]?.message || 
-                          "Failed to create account";
+    } catch (error: unknown) {
+      let errorMessage = "Failed to create account";
+
+      if (typeof error === "object" && error !== null && "errors" in error) {
+        const err = error as {
+          errors?: { longMessage?: string; message?: string }[];
+        };
+        errorMessage =
+          err.errors?.[0]?.longMessage ||
+          err.errors?.[0]?.message ||
+          errorMessage;
+      }
+
       setError(errorMessage);
       console.error("Clerk error:", JSON.stringify(error, null, 2));
     }
@@ -149,8 +158,8 @@ export default function SignUpDialog({
         <div className="p-3">
           <p className="text-accent-foreground text-center text-sm">
             Already have an account?
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               className="px-2 cursor-pointer"
               type="button"
               onClick={onSwitchToSignIn}

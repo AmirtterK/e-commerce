@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import clientPromise from "@/lib/mongodb";
 import { CartItem } from "@/types/CartItem";
 import { User } from "@/types/User";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
