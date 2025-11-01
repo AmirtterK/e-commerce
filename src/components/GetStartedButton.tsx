@@ -1,37 +1,26 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import SignUpDialog from "./SignUpDialog";
+import { useAuthDialog } from "./AuthDialogProvider";
 
-export default function SignInButton({
+export default function GetStartedButton({
   isCompact = true,
 }: {
   isCompact?: boolean;
 }) {
+    const { openSignup } = useAuthDialog();
+  
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          size="sm"
-          className={cn(
+     <Button
+      size="sm"
+       className={cn(
             isCompact ? "lg:inline-flex" : "hidden",
             "cursor-pointer"
           )}
-        >
-          Get Started
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-lg p-0 border-none bg-transparent shadow-none">
-        <DialogTitle></DialogTitle>
-        <SignUpDialog />
-      </DialogContent>
-    </Dialog>
+      onClick={openSignup}
+    >
+      <span>Get Started</span>
+    </Button>
   );
 }
