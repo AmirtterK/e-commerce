@@ -15,7 +15,7 @@ export default function GetStartedButton({
      <Button
       size="sm"
        className={cn(
-            isCompact ? "lg:inline-flex" : "hidden",
+            isCompact ? "hidden sm:inline-flex" : "hidden",
             "cursor-pointer"
           )}
       onClick={openSignup}
