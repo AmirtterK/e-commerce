@@ -118,8 +118,8 @@ export default function SignUpDialog({
             type="button"
             variant="outline"
             onClick={() => {
-              if (!isSignUpLoaded) return;
-              signUp.authenticateWithRedirect({
+              if (!isSignUpLoaded || !isSignInLoaded) return;
+              signIn.authenticateWithRedirect({
                 strategy: "oauth_google",
                 redirectUrl: "/sso-callback",
                 redirectUrlComplete: "/",
