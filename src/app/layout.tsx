@@ -9,6 +9,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import SyncUser from "@/components/SyncUser";
 import { Toaster } from "sonner";
 import { AuthDialogProvider } from "@/components/AuthDialogProvider";
+import { Analytics } from "@vercel/analytics/next";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -45,6 +47,7 @@ export default function RootLayout({
               <main className="">
                 <SyncUser />
                 {children}
+                <Analytics />
               </main>
               <Toaster />
             </AuthDialogProvider>
