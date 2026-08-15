@@ -98,16 +98,9 @@ export async function getProductsByCategory(category: string): Promise<Product[]
 }
 
 export async function getAllProducts(): Promise<Product[]> {
-  try {
-    const client = await clientPromise;
-    const db = client.db(DATABASE_NAME);
-    const collection = db.collection<ProductDocument>(COLLECTION_NAME);
-
-    const products = await collection.find({}).toArray();
-
-    return products.map(mapToProduct);
-  } catch (error) {
-    console.error('Error fetching all products:', error);
-    return [];
-  }
+  const client = await clientPromise;
+  const db = client.db(DATABASE_NAME);
+  const collection = db.collection<ProductDocument>(COLLECTION_NAME);
+  const products = await collection.find({}).toArray();
+  return products.map(mapToProduct);
 }
